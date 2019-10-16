@@ -10,7 +10,7 @@ import (
 
 // Roboter is the interface implemented by Robot that can send multiple types of messages.
 type Roboter interface {
-	SendMarkdown(ConfigID string, Content string, MentionedList []string) error
+	SendMarkdown(MsgType string, ConfigID string, Content string, MentionedList string) error
 }
 
 // Robot represents a workwxbot custom robot that can send messages to groups.
@@ -24,9 +24,9 @@ func NewRobot(webhook string) Roboter {
 }
 
 // SendMarkdown send a markdown type message.
-func (r Robot) SendMarkdown(ConfigID string, Content string, MentionedList []string) error {
+func (r Robot) SendMarkdown(MsgType string, ConfigID string, Content string, MentionedList string) error {
 	return r.send(&markdownMessage{
-		MsgType:       msgTypeMarkdown,
+		MsgType:       MsgType,
 		ProgramType:   programType,
 		IsSendNow:     isSendNow,
 		ConfigID:      ConfigID,
@@ -63,7 +63,7 @@ func (r Robot) send(msg interface{}) error {
 		return err
 	}
 	if wsp.Errcode != 0 {
-		return fmt.Errorf("dingrobot send failed: %v", wsp.Errmsg)
+		return fmt.Errorf("wechatrobot send failed: %v", wsp.Errmsg)
 	}
 
 	return nil
