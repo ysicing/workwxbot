@@ -25,7 +25,7 @@ func NewRobot(webhook string) Roboter {
 
 // SendMarkdown send a markdown type message.
 func (r Robot) SendMarkdown(MsgType string, ConfigID string, Content string, MentionedList string) error {
-	return r.send(&markdownMessage{
+	return r.send(&BotMessage{
 		MsgType:       MsgType,
 		ProgramType:   programType,
 		IsSendNow:     isSendNow,
