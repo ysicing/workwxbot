@@ -7,7 +7,7 @@ import (
 
 func TestClient_Send(t *testing.T) {
 	corpid := "wwxxxx"
-	agentid := 1000004
+	agentid := int64(1000004)
 	secretkey := "xxxxxxx"
 	client := workwxbot.Client{CropID: corpid, AgentID: agentid, AgentSecret: secretkey}
 	msg := workwxbot.Message{

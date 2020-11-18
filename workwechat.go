@@ -16,7 +16,7 @@ import (
 )
 
 //New 实例化微信企业号应用
-func New(cropID string, agentID int, AgentSecret string) *Client {
+func New(cropID string, agentID int64, AgentSecret string) *Client {
 
 	c := new(Client)
 	c.CropID = cropID

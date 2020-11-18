@@ -35,7 +35,7 @@ type AccessToken struct {
 //Client 微信企业号应用配置信息
 type Client struct {
 	CropID      string
-	AgentID     int
+	AgentID     int64
 	AgentSecret string
 	Token       AccessToken
 }
@@ -59,6 +59,6 @@ type Message struct {
 	ToParty  string  `json:"toparty"`
 	ToTag    string  `json:"totag"`
 	MsgType  string  `json:"msgtype"`
-	AgentID  int     `json:"agentid"`
+	AgentID  int64     `json:"agentid"`
 	Markdown Content `json:"markdown"`
 }
