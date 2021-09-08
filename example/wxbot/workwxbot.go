@@ -1,4 +1,4 @@
-package wxbot
+package main
 
 import (
 	"github.com/ysicing/workwxbot"
@@ -30,11 +30,11 @@ func main() {
 			MentionedList: []string{"@all"},
 		},
 	}
-	wxbot.Send(text)
+	_ = wxbot.Send(text)
 	markdown := workwxbot.WxBotMessage{
 		MsgType:  "markdown",
 		MarkDown: workwxbot.BotMarkDown{Content: "### 哈哈哈"}}
-	wxbot.Send(markdown)
+	_ = wxbot.Send(markdown)
 	news := workwxbot.WxBotMessage{
 		MsgType: "news",
 		News: workwxbot.News{
@@ -54,5 +54,5 @@ func main() {
 			},
 		},
 	}
-	wxbot.Send(news)
+	_ = wxbot.Send(news)
 }

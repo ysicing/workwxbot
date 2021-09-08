@@ -10,7 +10,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 )
@@ -28,17 +27,16 @@ func New(cropID string, agentID int64, AgentSecret string) *Client {
 //Send 发送信息
 func (c *Client) Send(msg Message) error {
 
-	c.GetAccessToken()
+	if err := c.GetAccessToken(); err != nil {
+		return err
+	}
 
 	msg.AgentID = c.AgentID
 	url := "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + c.Token.AccessToken
 
-	log.Println("消息推送人员: ", msg.ToUser)
-
 	resultByte, err := JSONPost(url, msg)
 	if err != nil {
 		err = errors.New("请求微信接口失败: " + err.Error())
-		log.Println(err)
 		return err
 	}
 
@@ -46,35 +44,31 @@ func (c *Client) Send(msg Message) error {
 	err = json.Unmarshal(resultByte, &result)
 	if err != nil {
 		err = errors.New("解析微信接口返回数据失败: " + err.Error())
-		log.Println(err)
 		return err
 	}
 
 	if result.ErrCode != 0 {
 		err = errors.New("发送消息失败: " + result.ErrMsg)
-		log.Println(err)
-
 	}
 
 	if result.InvalidUser != "" || result.InvalidTag != "" || result.InvalidParty != "" {
 		err = fmt.Errorf("消息发送成功, 但是有部分目标无法送达: %s%s%s", result.InvalidUser, result.InvalidParty, result.InvalidTag)
-		log.Println(err)
 	}
 
 	return err
 }
 
 //GetAccessToken 获取回话token
-func (c *Client) GetAccessToken() {
+func (c *Client) GetAccessToken() error {
 	var err error
 	if c.Token.AccessToken == "" || c.Token.ExpiresInTime.Before(time.Now()) {
 		c.Token, err = getAccessTokenFromWeixin(c.CropID, c.AgentSecret)
 		if err != nil {
-			log.Println("获取token失败: ", err)
-			return
+			return err
 		}
 		c.Token.ExpiresInTime = time.Now().Add(time.Duration(c.Token.ExpiresIn-1000) * time.Second)
 	}
+	return nil
 }
 
 //从微信服务器获取token

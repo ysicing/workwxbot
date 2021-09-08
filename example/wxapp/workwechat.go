@@ -1,4 +1,4 @@
-package wxapp
+package main
 
 import (
 	"github.com/ysicing/workwxbot"
@@ -14,13 +14,13 @@ func main() {
 		MsgType:  "markdown",
 		Markdown: workwxbot.Content{Content: "### 测试"},
 	}
-	client.Send(md)
+	_ = client.Send(md)
 	text := workwxbot.Message{
 		ToUser:  "xxxx",
 		MsgType: "text",
 		Text:    workwxbot.Content{Content: "文本测试"},
 	}
-	client.Send(text)
+	_ = client.Send(text)
 	textcard := workwxbot.Message{
 		ToUser:  "xxx",
 		MsgType: "textcard",
@@ -31,7 +31,7 @@ func main() {
 			Btntxt:      "更多",
 		},
 	}
-	client.Send(textcard)
+	_ = client.Send(textcard)
 	news := workwxbot.Message{
 		ToUser:  "xxxx",
 		MsgType: "news",
@@ -52,5 +52,5 @@ func main() {
 			},
 		},
 	}
-	client.Send(news)
+	_ = client.Send(news)
 }

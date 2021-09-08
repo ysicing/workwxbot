@@ -4,12 +4,6 @@ import (
 	"time"
 )
 
-const (
-	//msgTypeMarkdown = "markdown"
-	programType = "OA"
-	isSendNow   = true
-)
-
 // BotMessage 机器人消息
 type BotMessage struct {
 	MsgType       string `json:"msgtype"`
@@ -137,7 +131,7 @@ type TaskBtn struct {
 	IsBold      bool   `json:"is_bold"`
 }
 
-//Message 消息主体参数
+//Message 消息主体参数 https://work.weixin.qq.com/api/doc/90000/90135/90236
 type Message struct {
 	ToUser  string `json:"touser"`
 	ToParty string `json:"toparty"`
@@ -155,6 +149,8 @@ type Message struct {
 	MpNews   MpNews   `json:"mpnews"`
 	Markdown Content  `json:"markdown"`
 	Taskcard TaskCard `json:"taskcard"`
+	// TemplateCard TemplateCard `json:"template_card"`
+	// EnableIDTrans          int `json:"enable_id_trans"` // 表示是否开启id转译，0表示否，1表示是，默认0
 	// EnableDuplicateCheck bool `json:"enable_duplicate_check"`  // 表示是否开启重复消息检查，0表示否，1表示是，默认0
 	// DuplicateCheckInterval int `json:"duplicate_check_interval"` // 表示是否重复消息检查的时间间隔，默认1800s，最大不超过4小时
 }
